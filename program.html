@@ -36,6 +36,10 @@
 
       a:visited {color:darkgrey;} /* 已访问链接 */
 
+      .aa:link {color:black;} /* 未访问链接*/
+
+      .aa:visited {color:black;} /* 已访问链接 */
+
       a:hover {color: red;} /* 鼠标移动到链接上 */
 
       a:active {color:red;} /* 鼠标点击时 */
@@ -153,6 +157,11 @@
   <div class="bl">
     <h3>欢迎回来！</h3>
     <p>这里是<b>LangLight语灯社区</b>·社区造语の<b>造词器</b></p>
+    <p>
+      活动Q群：
+      <br>
+      &emsp;<a class="aa" href="https://jq.qq.com/?_wv=1027&k=RRBcLZKs" target="_blank">735650876</a>
+    </p>
     <p>
       使用方法：
       <br>
@@ -318,7 +327,7 @@
           }
           aword += String(listsGetRandomItem(vowel, false));
         }
-        if (Math.random() <= 0.2) {
+        if (Math.random() <= 0.2 && aword.slice(-1) != 'y') {
           aword += 'y';
         } else {
           if (Math.random() <= 0.4) {
@@ -344,12 +353,7 @@
         aword = aword.slice(0, aword.length - 1);
         aword += 'k';
       }
-      if (Math.random() <= 0.1 && vowel.indexOf(aword.charAt(0)) + 1 == 0) {
-        t = aword.slice(1, aword.length);
-        aword = 'y';
-        aword += String(t);
-      }
-      if (Math.random() <= 0.1 && vowel.indexOf(aword.slice(-2).charAt(0)) + 1 != 0) {
+      if (Math.random() <= 1 / 27 && vowel.indexOf(aword.slice(-2).charAt(0)) + 1 != 0) {
         aword = aword.slice(0, aword.length - 1);
         aword += 'ŋ';
       }
