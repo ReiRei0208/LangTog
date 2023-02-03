@@ -30,10 +30,7 @@
       border-radius: 10px;
       }
       
-      a {
-        font-size: 40%;
-        text-decoration: none
-      }
+      a {text-decoration: none}
 
       a:link {color:darkgrey;} /* 未访问链接*/
 
@@ -60,12 +57,21 @@
       <br>
       &emsp;输入的中文释义要<b>尽可能简短</b>，防止程序读取滥栈
     </p>
-    <span style="padding: 1px;"></span>
+    <span style="padding: 1px; font-size: 40%;">
     <p style="margin-left:10px;">
       <a href="https://docs.qq.com/sheet/DUm5SZEVlZllXTk9t?tab=5z9ta1">点击此处跳转至QQ文档</a>
     </p>
   </div>
 
+  <span style="padding: 60px;"></span>
+
+  <div class="bl">
+    <h3>生成参数</h3>
+    <form onsubmit="false">
+    <input type="text" id="yinjie" placeholder="单词音节(数字)" />
+    <input type="text" id="long" placeholder="长度最值(数字)" />
+    </form>
+  </div>
   <span style="padding: 60px;"></span>
 
   <div class="bl">
@@ -120,15 +126,20 @@
                 }
                 return b;
             }
+            function randomlimit(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min);
+            }
 
     function change() {
       let newWord = [];
       var chinese = splitBySharp(document.getElementById('list').value);
+      var yinjie = Number(document.getElementById('yinjie').value);
+      var long = Number(document.getElementById('long').value);
 
       if (chinese != "") {
 
         for (let i = 0; i < chinese.length; i++) {
-          var chan = makeWord(1,6);
+          var chan = makeWord(randomlimit(1,yinjie),randomlimit(4,long));
           newWord.push(chan);
         }
         newWord = bubbleSortLong(newWord);
@@ -143,7 +154,7 @@
         for (let i = 0; i < chinese.length; i++) {
           resalt += "<li>" + together[i] + "</li>";
         }
-        resalt += "</ul>"
+        resalt += "</ul>";
 
         document.getElementById("get").innerHTML = resalt;
 
