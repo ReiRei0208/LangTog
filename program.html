@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LangLight | 社区造词器</title>
+
+  <style>
+    input {
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 16px;
+      width: 100%;
+      height: 40px;
+    }
+    .tp {
+      font-size: 150%;
+      margin:0 auto;
+      margin-top: 20px;
+      width:90%;
+      }
+    .bl {
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px #ccc;
+      border-radius: 10px;
+      }
+      
+      a {
+        font-size: 40%;
+        text-decoration: none
+      }
+
+      a:link {color:darkgrey;} /* 未访问链接*/
+
+      a:visited {color:darkgrey;} /* 已访问链接 */
+
+      a:hover {color: red;} /* 鼠标移动到链接上 */
+
+      a:active {color:red;} /* 鼠标点击时 */
+  </style>
+
+</head>
+<body>
+
+  <div class="bl">
+    <h3>欢迎回来！</h3>
+    <p>这里是<b>LangLight语灯社区</b>·社区造语の<b>造词器</b></p>
+    <p>
+      使用方法：
+      <br>
+      &emsp;输入<b>以“#”为分隔符</b>的多组中文释义，回车即可~
+    </p>
+    <p>
+      使用须知：
+      <br>
+      &emsp;输入的中文释义要<b>尽可能简短</b>，防止程序读取滥栈
+    </p>
+    <span style="padding: 1px;"></span>
+    <p style="margin-left:10px;">
+      <a href="https://docs.qq.com/sheet/DUm5SZEVlZllXTk9t?tab=5z9ta1">点击此处跳转至QQ文档</a>
+    </p>
+  </div>
+
+  <span style="padding: 60px;"></span>
+
+  <div class="bl">
+    <form onsubmit="return change()">
+    <input type="text" id="list" placeholder="请输入中文释义..." />
+    </form>
+    <div class="tp" id="get"></div>
+  </div>
+
+  <script>
+
+    function bubbleSort(a) {
+                let len = a.length;
+                for (let i = 0; i < len; i++) {
+                    for (let j = 0; j < len - i - 1; j++) {
+                        if (a[j] > a[j + 1]) {
+                            let temp = a[j];
+                            a[j] = a[j + 1];
+                            a[j + 1] = temp;
+                        }
+                    }
+                }
+                return a;
+            }
+    function bubbleSortLong(list) {
+            let length = list.length;
+            for (let i = 0; i < length; i++) {
+                for (let j = 0; j < length - 1; j++) {
+                if (list[j].length > list[j + 1].length) {
+                    let temp = list[j];
+                    list[j] = list[j + 1];
+                    list[j + 1] = temp;
+                }
+                }
+            }
+            return list;
+            }
+    function bubbleSortLists(a,b) {
+                let len = a.length;
+                for (let i = 0; i < len; i++) {
+                    for (let j = 0; j < len - i - 1; j++) {
+                        if (a[j] > a[j + 1]) {
+                            let temp = a[j];
+                            a[j] = a[j + 1];
+                            a[j + 1] = temp;
+
+                            temp = b[j];
+                            b[j] = b[j + 1];
+                            b[j + 1] = temp;
+                        }
+                    }
+                }
+                return b;
+            }
+
+    function change() {
+      let newWord = [];
+      var chinese = splitBySharp(document.getElementById('list').value);
+
+      if (chinese != "") {
+
+        for (let i = 0; i < chinese.length; i++) {
+          var chan = makeWord(1,6);
+          newWord.push(chan);
+        }
+        newWord = bubbleSortLong(newWord);
+
+        let together = [];
+        for (let i = 0; i < chinese.length; i++) {
+          together.push(chinese[i] + "：" + newWord[i]);
+        }
+        together = bubbleSortLists(newWord,together);
+
+        let resalt = "<ul>";
+        for (let i = 0; i < chinese.length; i++) {
+          resalt += "<li>" + together[i] + "</li>";
+        }
+        resalt += "</ul>"
+
+        document.getElementById("get").innerHTML = resalt;
+
+      }
+
+      return false;
+    
+    }
+  </script>
+
+  <script>
+    var vowel, syllable, Length_limit, pinyin, aword, consonant, complement, t;
+
+    function listsGetRandomItem(list, remove) {
+      var x = Math.floor(Math.random() * list.length);
+      if (remove) {
+        return list.splice(x, 1)[0];
+      } else {
+        return list[x];
+      }
+    }
+
+    function splitBySharp(str) {
+      let a = [];
+      let temp = '';
+      for (let i = 0; i < str.length; i++) {
+        if (str[i] === '#') {
+          a.push(temp);
+          temp = '';
+        } else {
+          temp += str[i];
+        }
+      }
+      a.push(temp);
+      return a;
+    }
+
+    // make a word
+    function makeWord(syllable, Length_limit) {
+      aword = '';
+      if (Math.random() <= 0.4) {
+        aword += String(listsGetRandomItem(vowel, false));
+      }
+      for (var count = 0; count < syllable; count++) {
+        if (Math.random() <= 0.8) {
+          if (aword.slice(-1) != 'y') {
+            aword += String(listsGetRandomItem(pinyin, false));
+            if (Math.random() <= 0.3) {
+              aword += String(listsGetRandomItem(consonant, false));
+            }
+          }
+          aword += String(listsGetRandomItem(vowel, false));
+        }
+        if (Math.random() <= 0.4) {
+          if (Math.random() <= 0.3) {
+            aword += 'ŋ';
+          } else {
+            aword += 'y';
+          }
+        } else {
+          if (Math.random() <= 0.4) {
+            t = listsGetRandomItem(vowel, false);
+            while (!(t != aword.slice(-1))) {
+              t = listsGetRandomItem(vowel, false);
+            }
+            aword += String(t);
+          }
+          if (Math.random() <= 0.5) {
+            aword += String(listsGetRandomItem(complement, false));
+          }
+          if (Math.random() <= 0.5) {
+            aword += String(listsGetRandomItem(pinyin, false));
+          }
+        }
+      }
+      if (aword.slice(-1) == 'g' && aword.charAt(((aword.length - 1) - 1)) == 'n') {
+        aword = aword.slice(0, aword.length - 2);
+        aword += 'ŋ';
+      }
+      if (aword.slice(-1) == 'z' || aword.slice(-1) == 'x') {
+        aword = aword.slice(0, aword.length - 1);
+      }
+      if (aword.length <= Length_limit) {
+        return aword;
+      }
+      return makeWord(syllable, Length_limit);
+    }
+
+    vowel = ["a","i","e","o","u","ŭ"];
+    pinyin = ["b","c","d","f","g","h","j","k","ŋ","m","l","p","q","r","s","t","v","x","z","n"];
+    consonant = ['r', 'l','t','c','d','p','b','k'];
+    complement = ['m', 'n'];
+  </script>
+</body>
+</html>
