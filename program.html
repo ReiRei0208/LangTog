@@ -328,6 +328,9 @@
           aword += String(listsGetRandomItem(vowel, false));
         }
         if (Math.random() <= 0.2 && aword.slice(-1) != 'y') {
+          if (vowel.indexOf(aword.slice(-1)) + 1 != 0) {
+            aword += String(listsGetRandomItem(vowel, false));
+          }
           aword += 'y';
         } else {
           if (Math.random() <= 0.4) {
