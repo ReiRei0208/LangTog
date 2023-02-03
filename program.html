@@ -307,7 +307,11 @@
       for (var count = 0; count < syllable; count++) {
         if (Math.random() <= 0.8) {
           if (aword.slice(-1) != 'y') {
-            aword += String(listsGetRandomItem(pinyin, false));
+            t = listsGetRandomItem(pinyin, false);
+            while (!(t != aword.slice(-1))) {
+              t = listsGetRandomItem(pinyin, false);
+            }
+            aword += String(t);
             if (Math.random() <= 0.3) {
               aword += String(listsGetRandomItem(consonant, false));
             }
@@ -332,7 +336,7 @@
             aword += String(listsGetRandomItem(complement, false));
           }
           if (Math.random() <= 0.5) {
-            aword += String(listsGetRandomItem(pinyin, false));
+            aword += String(listsGetRandomItem(consonant, false));
           }
         }
       }
@@ -340,8 +344,14 @@
         aword = aword.slice(0, aword.length - 2);
         aword += 'ŋ';
       }
-      if (aword.slice(-1) == 'z' || aword.slice(-1) == 'x') {
+      if (aword.slice(-1) == 'c') {
         aword = aword.slice(0, aword.length - 1);
+        aword += 'k';
+      }
+      if (Math.random() <= 1 / 27) {
+        t = aword.slice(1, aword.length);
+        aword = 'y';
+        aword += String(t);
       }
       if (aword.length <= Length_limit) {
         return aword;
@@ -351,7 +361,7 @@
 
     vowel = ["a","i","e","o","u","ŭ"];
     pinyin = ["b","c","d","f","g","h","j","k","ŋ","m","l","p","q","r","s","t","v","x","z","n"];
-    consonant = ['r', 'l','t','c','d','p','b','k'];
+    consonant = ['r', 'l','t','c','d','p','b','k','g'];
     complement = ['m', 'n'];
   </script>
 </body>
