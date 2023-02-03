@@ -318,7 +318,7 @@
           }
           aword += String(listsGetRandomItem(vowel, false));
         }
-        if (Math.random() <= 0.3) {
+        if (Math.random() <= 0.2) {
           aword += 'y';
         } else {
           if (Math.random() <= 0.4) {
@@ -344,12 +344,12 @@
         aword = aword.slice(0, aword.length - 1);
         aword += 'k';
       }
-      if (Math.random() <= 1 / 27 && vowel.indexOf(aword.charAt(0)) + 1 == 0) {
+      if (Math.random() <= 0.1 && vowel.indexOf(aword.charAt(0)) + 1 == 0) {
         t = aword.slice(1, aword.length);
         aword = 'y';
         aword += String(t);
       }
-      if (Math.random() <= 1 / 27 && vowel.indexOf(aword.slice(-2).charAt(0)) + 1 != 0) {
+      if (Math.random() <= 0.1 && vowel.indexOf(aword.slice(-2).charAt(0)) + 1 != 0) {
         aword = aword.slice(0, aword.length - 1);
         aword += 'ŋ';
       }
